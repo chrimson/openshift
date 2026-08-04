@@ -1,0 +1,7 @@
+eval $(./crc oc-env)
+
+oc patch oauthclient/openshift-browser-client   --type=json   -p '[{"op": "add", "path": "/redirectURIs/-", "value": "https://openshift.chrimson.net/auth/callback"}]'
+
+oc patch oauthclient/console \
+  --type=json \
+  -p '[{"op": "add", "path": "/redirectURIs/-", "value": "https://openshift.chrimson.net/auth/callback"}]'
