@@ -8,3 +8,6 @@ oc patch oauthclient/openshift-browser-client --type=json -p '[{"op": "add", "pa
 
 oc patch oauthclient/console --type=json -p '[{"op": "add", "path": "/redirectURIs/-", "value": "https://openshift.chrimson.net/auth/callback"}]'
 
+oc patch oauthclient/console --type=merge -p '{"redirectURIs":["https://openshift.chrimson.net/auth/callback"]}'
+
+oc patch oauthclient/openshift-browser-client --type=merge -p '{"redirectURIs":["https://oauth-openshift.apps.openshift.chrimson.net/oauth/token/implicit"]}'
