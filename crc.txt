@@ -1,7 +1,10 @@
 eval $(./crc oc-env)
 
-oc patch oauthclient/openshift-browser-client   --type=json   -p '[{"op": "add", "path": "/redirectURIs/-", "value": "https://openshift.chrimson.net/auth/callback"}]'
+oc patch console.operator.openshift.io/cluster --type=merge -p '{"spec":{"route":{"hostname":"openshift.chrimson.net"}}}'
 
-oc patch oauthclient/console \
-  --type=json \
-  -p '[{"op": "add", "path": "/redirectURIs/-", "value": "https://openshift.chrimson.net/auth/callback"}]'
+oc patch oauthclient/openshift-browser-client --type=merge -p '{"redirectURIs":["https://openshift.chrimson.net/auth/callback"]}'
+
+oc patch oauthclient/openshift-browser-client --type=json -p '[{"op": "add", "path": "/redirectURIs/-", "value": "https://openshift.chrimson.net/auth/callback"}]'
+
+oc patch oauthclient/console --type=json -p '[{"op": "add", "path": "/redirectURIs/-", "value": "https://openshift.chrimson.net/auth/callback"}]'
+
