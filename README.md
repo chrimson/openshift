@@ -2,8 +2,8 @@
 
 ## Fresh install
 ```
-./crc -f stop
-./crc -f delete
+./crc stop -f
+./crc delete -f
 ./crc cleanup
 rm -rf ~/.crc
 
