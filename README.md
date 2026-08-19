@@ -21,3 +21,14 @@ oc get secret htpass-secret -n openshift-config -o jsonpath='{.data.htpasswd}' |
 htpasswd -b htpasswd developer <YOUR_NEW_STRONG_PASSWORD>
 oc create secret generic htpass-secret --from-file=htpasswd=htpasswd -n openshift-config --dry-run=client -o yaml | oc replace -f -
 ```
+
+## ArgoCD
+```
+oc create route passthrough argocd-external \
+  --service=argocd-server \
+  --port=https \
+  --hostname=argocd.chrimson.net \
+  -n argocd
+
+oc extract secret/argocd-initial-admin-secret -n argocd --to=- --keys=password
+```
