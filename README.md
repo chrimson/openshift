@@ -26,13 +26,13 @@ oc create secret generic htpass-secret --from-file=htpasswd=htpasswd -n openshif
 ```
 oc new-project argocd
 
-oc apply --server-side -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-
 oc adm policy add-scc-to-user anyuid -z argocd-application-controller -n argocd
-oc adm policy add-scc-to-user anyuid -z argocd-server -n argocd
-oc adm policy add-scc-to-user anyuid -z argocd-redis -n argocd
+oc adm policy add-scc-to-user anyuid -z argocd-applicationset-controller -n argocd
 oc adm policy add-scc-to-user anyuid -z argocd-dex-server -n argocd
+oc adm policy add-scc-to-user anyuid -z argocd-notifications-controller -n argocd
+oc adm policy add-scc-to-user anyuid -z argocd-redis -n argocd
 oc adm policy add-scc-to-user anyuid -z argocd-repo-server -n argocd
+oc adm policy add-scc-to-user anyuid -z argocd-server -n argocd
 
 oc create secret generic argocd-redis -n argocd \
   --from-literal=auth="" \
@@ -48,6 +48,8 @@ oc create route passthrough argocd-external \
   --port=https \
   --hostname=argocd.chrimson.net \
   -n argocd
+
+oc apply --server-side -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
 oc extract secret/argocd-initial-admin-secret -n argocd --to=- --keys=password
 ```
