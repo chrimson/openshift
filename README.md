@@ -51,5 +51,12 @@ oc create route passthrough argocd-external \
 
 oc apply --server-side -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
+oc set image deployment/argocd-redis redis=redis:7.2-alpine -n argocd
+oc create secret generic argocd-redis \
+  --from-literal=auth=argocd-redis-password \
+  -n argocd \
+  --dry-run=client -o yaml | oc apply -f -
+oc rollout restart deployment -n argocd argocd-redis
+
 oc extract secret/argocd-initial-admin-secret -n argocd --to=- --keys=password
 ```
