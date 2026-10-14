@@ -26,13 +26,13 @@ oc create secret generic htpass-secret --from-file=htpasswd=htpasswd -n openshif
 ```
 oc new-project argocd
 
-oc adm policy add-scc-to-user anyuid -z argocd-application-controller -n argocd
-oc adm policy add-scc-to-user anyuid -z argocd-applicationset-controller -n argocd
-oc adm policy add-scc-to-user anyuid -z argocd-dex-server -n argocd
-oc adm policy add-scc-to-user anyuid -z argocd-notifications-controller -n argocd
-oc adm policy add-scc-to-user anyuid -z argocd-redis -n argocd
-oc adm policy add-scc-to-user anyuid -z argocd-repo-server -n argocd
-oc adm policy add-scc-to-user anyuid -z argocd-server -n argocd
+oc adm policy add-scc-to-user privileged -z argocd-application-controller -n argocd
+oc adm policy add-scc-to-user privileged -z argocd-applicationset-controller -n argocd
+oc adm policy add-scc-to-user privileged -z argocd-dex-server -n argocd
+oc adm policy add-scc-to-user privileged -z argocd-notifications-controller -n argocd
+oc adm policy add-scc-to-user privileged -z argocd-redis -n argocd
+oc adm policy add-scc-to-user privileged -z argocd-repo-server -n argocd
+oc adm policy add-scc-to-user privileged -z argocd-server -n argocd
 
 oc create secret generic argocd-redis -n argocd \
   --from-literal=auth="" \
