@@ -2,6 +2,7 @@
 
 ## Install
 ```
+./crc config set disk-size 100
 ./crc setup
 ./crc start
 eval $(./crc oc-env)
