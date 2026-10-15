@@ -60,6 +60,7 @@ oc rollout restart deployment -n argocd argocd-redis
 
 oc extract secret/argocd-initial-admin-secret -n argocd --to=- --keys=password
 
+oc delete -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 oc delete namespace argocd
-oc delete clusterrolebinding -l rbac.authorization.k8s.io/autoupdate=false --ignore-not-found
+oc delete clusterrolebinding argocd-application-controller argocd-applicationset-controller argocd-server
 ```
