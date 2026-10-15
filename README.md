@@ -1,12 +1,7 @@
 # OpenShift
 
-## Fresh install
+## Install
 ```
-./crc stop -f
-./crc delete -f
-./crc cleanup
-rm -rf ~/.crc
-
 ./crc setup
 ./crc start
 eval $(./crc oc-env)
@@ -22,7 +17,17 @@ htpasswd -b htpasswd developer <YOUR_NEW_STRONG_PASSWORD>
 oc create secret generic htpass-secret --from-file=htpasswd=htpasswd -n openshift-config --dry-run=client -o yaml | oc replace -f -
 ```
 
-## ArgoCD
+## Uninstall
+```
+./crc stop -f
+./crc delete -f
+./crc cleanup
+rm -rf ~/.crc
+```
+
+# ArgoCD
+
+## Install
 ```
 oc new-project argocd
 
@@ -78,7 +83,10 @@ oc patch deployment argocd-repo-server -n argocd --type='json' -p='[
     }
   }
 ]'
+```
 
+## Uninstall
+```
 oc delete -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 oc delete namespace argocd
 oc delete clusterrolebinding argocd-application-controller argocd-applicationset-controller argocd-server
