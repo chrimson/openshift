@@ -60,6 +60,25 @@ oc rollout restart deployment -n argocd argocd-redis
 
 oc extract secret/argocd-initial-admin-secret -n argocd --to=- --keys=password
 
+oc patch deployment argocd-repo-server -n argocd --type='json' -p='[
+  {
+    "op": "add",
+    "path": "/spec/template/spec/containers/0/resources",
+    "value": {
+      "limits": {
+        "cpu": "500m",
+        "memory": "1Gi",
+        "ephemeral-storage": "1Gi"
+      },
+      "requests": {
+        "cpu": "50m",
+        "memory": "256Mi",
+        "ephemeral-storage": "256Mi"
+      }
+    }
+  }
+]'
+
 oc delete -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 oc delete namespace argocd
 oc delete clusterrolebinding argocd-application-controller argocd-applicationset-controller argocd-server
