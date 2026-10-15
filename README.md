@@ -59,4 +59,7 @@ oc create secret generic argocd-redis \
 oc rollout restart deployment -n argocd argocd-redis
 
 oc extract secret/argocd-initial-admin-secret -n argocd --to=- --keys=password
+
+oc delete namespace argocd
+oc delete clusterrolebinding -l rbac.authorization.k8s.io/autoupdate=false --ignore-not-found
 ```
